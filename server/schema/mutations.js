@@ -1,45 +1,41 @@
 const graphql = require('graphql');
-const { GraphQLObjectType, GraphQLString, GraphQLID } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLInt } = graphql;
 const mongoose = require('mongoose');
-const Song = mongoose.model('song');
-const Lyric = mongoose.model('lyric');
-const SongType = require('./song_type');
-const LyricType = require('./lyric_type');
+const Client = mongoose.model('client');
+const ClientType = require('./client_type');
 
 const mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
-    addSong: {
-      type: SongType,
+    addClient: {
+      type: ClientType,
       args: {
-        title: { type: GraphQLString }
+        name: { type: GraphQLString },
+        store: { type: GraphQLString }
       },
-      resolve(parentValue, { title }) {
-        return (new Song({ title })).save()
+      resolve(parentValue, { name, store }) {
+        return (new Client({ name, store })).save()
       }
     },
-    addLyricToSong: {
-      type: SongType,
+    addChipToClient: {
+      type: ClientType,
       args: {
-        content: { type: GraphQLString },
-        songId: { type: GraphQLID }
+        chipNumber: { type: GraphQLInt },
+        clientId: { type: GraphQLID },
+        phoneNumber: {type: GraphQLInt},
+         provider: {type: GraphQLString},
+          technician: {type: GraphQLString}, 
+          date: {type: GraphQLString}
       },
-      resolve(parentValue, { content, songId }) {
-        return Song.addLyric(songId, content);
+      resolve(parentValue, {  clientId, chipNumber, phoneNumber, provider, technician, date }) {
+        return Client.addChip( clientId, chipNumber, phoneNumber, provider, technician, date );
       }
     },
-    likeLyric: {
-      type: LyricType,
+    deleteClient: {
+      type: ClientType,
       args: { id: { type: GraphQLID } },
       resolve(parentValue, { id }) {
-        return Lyric.like(id);
-      }
-    },
-    deleteSong: {
-      type: SongType,
-      args: { id: { type: GraphQLID } },
-      resolve(parentValue, { id }) {
-        return Song.remove({ _id: id });
+        return Client.remove({ _id: id });
       }
     }
   }
