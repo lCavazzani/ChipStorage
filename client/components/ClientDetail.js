@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import gql from 'graphql-tag'
 import {graphql} from 'react-apollo';
 import { Link, withRouter } from 'react-router-dom';
-import fetchClient from '../queries/fetchClient'
+import fetchClient from '../queries/fetchClientById'
 
 class ClientDetail extends Component {
      
@@ -12,8 +12,7 @@ class ClientDetail extends Component {
         return (
             <div>
                 <Link to="/">Back</Link>
-                <h3>{client ? client.name : ""}</h3>
-                
+                <h3>{client ? client.name : ""}</h3>   
             </div>
         )
     }

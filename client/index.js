@@ -12,7 +12,7 @@ import { ApolloProvider } from 'react-apollo';
 import ClientList from './components/ClientList';
 import ClientCreate from './components/ClientCreate'
 import ClientDetail from './components/ClientDetail'
-
+import ClinetDetailName from './components/ClinetDetailName'
 
 const client = new ApolloClient({});
 
@@ -25,8 +25,9 @@ const Root = () => {
           <Route exact path="/">
             <ClientList />
           </Route>
-          <Route path="/clients/new" component={ClientCreate} />
-          <Route path="/client/:id" component={ClientDetail} />
+          <Route path="/clients/new" exact component={ClientCreate} />
+          <Route path="/client/:id" exact component={ClientDetail} />
+          <Route path="/clientName/:name" exact component={ClinetDetailName} />
         </Switch>
       </div>
     </Router>

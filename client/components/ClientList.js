@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import fetchClients from '../queries/fetchClients'
 import gql from 'graphql-tag'
 import {graphql} from 'react-apollo';
+import ClientSearch from './ClientSearch';
 // import {
 //     Link
 //   } from "react-router-dom";
@@ -29,15 +30,18 @@ class ClientList extends Component {
     render(){
         return (
             <div>
-            <ul className="collection">{this.props.data.loading? "loading" : this.renderClients()}</ul>
-            {/* <Link to="/songs/new" className="btn-floating btn-large red right"><i className="material-icons">add</i></Link> */}
+                <ClientSearch /> 
+                <div>
+                <ul className="collection">{this.props.data.loading? "loading" : this.renderClients()}</ul>
+                {/* <Link to="/songs/new" className="btn-floating btn-large red right"><i className="material-icons">add</i></Link> */}
+                </div>
             </div>
         )
     }
 };
 const mutation =  gql `
-mutation DeleteSong($id: ID) {
-    deleteSong(id: $id){
+mutation DeleteClient($id: ID) {
+    deleteClient(id: $id){
         id
     }
 }
