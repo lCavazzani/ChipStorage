@@ -3,6 +3,8 @@ import fetchClients from '../queries/fetchClients'
 import gql from 'graphql-tag'
 import {graphql} from 'react-apollo';
 import ClientSearch from './ClientSearch';
+import { Link, withRouter } from 'react-router-dom';
+
 // import {
 //     Link
 //   } from "react-router-dom";
@@ -17,12 +19,8 @@ class ClientList extends Component {
      renderClients() {
         return this.props.data.clients.map(({name, id}) => {
             return (
-                <li key={id} className="collection-item">
+                <li key={id} className="collection-item" onClick={() => this.props.history.push(`/clientName/${name}`)}>
                     {name}
-                <i
-                className="material-icons"
-                // onClick={() => this.onSongDelete(id)}
-                >delete</i>
                 </li>
             )
         })
@@ -33,7 +31,7 @@ class ClientList extends Component {
                 <ClientSearch /> 
                 <div>
                 <ul className="collection">{this.props.data.loading? "loading" : this.renderClients()}</ul>
-                {/* <Link to="/songs/new" className="btn-floating btn-large red right"><i className="material-icons">add</i></Link> */}
+                <Link to="/clients/new" className="btn-floating btn-large red right"><i className="material-icons">add</i></Link>
                 </div>
             </div>
         )
@@ -49,5 +47,5 @@ mutation DeleteClient($id: ID) {
 
 
 export default graphql(mutation)(
-    graphql(fetchClients)(ClientList)
+    graphql(fetchClients)(withRouter(ClientList))
 );

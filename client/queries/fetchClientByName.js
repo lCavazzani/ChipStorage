@@ -4,7 +4,16 @@ export default gql `
 query ClientQueryByName($name: String!) {
     clientByName(name: $name){
         name,
-        id
+        id,
+        store,
+        chips {
+            id,
+            chipNumber,
+            phoneNumber,
+            provider,
+            technician,
+            date,
+        }
     }
 }
 `;
